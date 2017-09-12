@@ -16,6 +16,8 @@ ActiveRecord::Schema.define(version: 20170912084712) do
   enable_extension "plpgsql"
 
   create_table "announcements", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.index ["shop_id"], name: "index_announcements_on_shop_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -26,4 +28,5 @@ ActiveRecord::Schema.define(version: 20170912084712) do
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
   end
 
+  add_foreign_key "announcements", "shops"
 end
