@@ -10,14 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912084712) do
+ActiveRecord::Schema.define(version: 20170913093435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "announcement_settings", force: :cascade do |t|
+    t.bigint "announcement_id", null: false
+    t.string "url_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["announcement_id"], name: "index_announcement_settings_on_announcement_id"
+  end
+
   create_table "announcements", force: :cascade do |t|
     t.bigint "shop_id", null: false
+    t.bigint "template_id"
+    t.string "name"
+    t.string "message"
+    t.string "button_text"
+    t.boolean "is_template"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_announcements_on_shop_id"
+    t.index ["template_id"], name: "index_announcements_on_template_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -28,5 +45,7 @@ ActiveRecord::Schema.define(version: 20170912084712) do
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
   end
 
+  add_foreign_key "announcement_settings", "announcements"
+  add_foreign_key "announcements", "announcements", column: "template_id"
   add_foreign_key "announcements", "shops"
 end
