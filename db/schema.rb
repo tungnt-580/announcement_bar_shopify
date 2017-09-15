@@ -24,13 +24,19 @@ ActiveRecord::Schema.define(version: 20170913093435) do
   end
 
   create_table "announcements", force: :cascade do |t|
-    t.bigint "shop_id", null: false
+    t.bigint "shop_id"
     t.bigint "template_id"
     t.string "name"
     t.string "message"
     t.string "button_text"
     t.boolean "is_template"
     t.boolean "active"
+    t.string "background_color"
+    t.string "text_color"
+    t.string "button_background_color"
+    t.string "button_text_color"
+    t.string "fonts"
+    t.string "font_size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_announcements_on_shop_id"

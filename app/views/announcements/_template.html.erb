@@ -1,0 +1,6 @@
+<div style="width: 100%; position: relative; margin-bottom: 5px;">
+  <%= content_tag :div, style: "background-color: #{announcement.background_color}; color: #{announcement.text_color}; text-align: center; font-size: #{announcement.font_size}; font-weight: normal; line-height: 25px; margin: 0px; padding: 10px; overflow: hidden; border: none; display: inline-block; width: 85%; font-family: #{announcement.fonts};" do %>
+      <%= announcement.name %>
+  <% end %>
+  <%= link_to "Use", choose_template_announcements_path(template_id: announcement.id), class: "btn default", remote: true %>
+</div>

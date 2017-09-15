@@ -1,0 +1,10 @@
+<div style="width: 100%; position: relative;">
+  <div style="background-image: url(https://s3.amazonaws.com/lastsecondcoupon/)">
+    <%= content_tag :div, style:"background-color:#{@announcement.background_color}; color:#{@announcement.text_color};text-align:center; font-size:#{@announcement.font_size};font-weight:normal; line-height:25px;height:auto;margin:0;padding: 10px 0px;width:100%;border:none;position: relative;top: 0;left: 0;z-index: 999;font-family: #{@announcement.fonts};" do %>
+      <%= @announcement.message %>
+      <%= button_tag type: "button", style: "background-color: #{@announcement.button_background_color}; color:#{@announcement.button_text_color};outline:none;border:none;line-height:25px;padding: 0 10px;border-radius:5px; font-family: #{@announcement.fonts}" do %>
+        <%= @announcement.button_text %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<% content_for :javascript do %>
+  <script type="text/javascript">
+    ShopifyApp.Bar.initialize({
+      buttons: {
+        primary: {
+          label: "Save",
+          message: "announcement_submit"
+        },
+        secondary: [
+          { 
+            label: "Cancel", 
+            href: "/announcements"
+          }
+        ],
+      },
+      title: 'New',
+      breadcrumb: {
+        label: "Announcements",
+        href: "/announcements",
+        target: 'app',
+        loading: false
+      }
+    });
+  </script>
+<% end %>
+<div class="section">
+  <div class="section-summary">
+    <a name="summary"></a>
+    <h1>Select a template</h1>
+    <p>Template help you create announcement as fast as possible. Click Use to choose template</p>
+  </div>
+
+  <div class="section-content">
+    <div class="section-row">
+      <div class="section-cell">
+        <% Announcement.template.each do |announcement| %>
+          <%= render partial: "template", locals: {announcement: announcement} %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="preview_config">
+  <%= render "preview_config" %>
+</div>

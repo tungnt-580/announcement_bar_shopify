@@ -1,0 +1,18 @@
+<%= form_for @announcement, html: {"data-shopify-app-submit" => "announcement_submit"} do |f| %>
+  <%= f.hidden_field :background_color %>
+  <%= f.hidden_field :text_color %>
+  <%= f.hidden_field :button_background_color %>
+  <%= f.hidden_field :button_text_color %>
+  <%= f.hidden_field :fonts %>
+  <%= f.hidden_field :font_size %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :message %>
+  <%= f.text_field :message %>
+  <%= f.label :button_text %>
+  <%= f.text_field :button_text %>
+  <%= f.radio_button :active, true %>
+  <%= f.label :active_true, 'Active' %>
+  <%= f.radio_button :active, false %>
+  <%= f.label :active_false, 'Inactive' %>
+<% end %>

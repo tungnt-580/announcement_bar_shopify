@@ -2,20 +2,58 @@
   var server, shop, scripts = document.getElementsByTagName('script');
 
   for (var i = 0; i < scripts.length; i++) {
-    if (scripts[i].src.indexOf('/add_announcements.js') > 0) {
+    if (scripts[i].src.indexOf('script_tags/add_announcements.js') > 0) {
       server = scripts[i].src.split('script_tags/add_announcements.js')[0];
       shop   = scripts[i].src.split('script_tags/add_announcements.js?shop=')[1];
     }
   }
 
   function render_announcements() {
-    SS.Ajax.request(server + 'announcements.json?shop=' + shop + '&task=get_settings', function(res) {
+    SS.Ajax.request(server + 'api/announcements/active.json?shop=' + shop, function(res) {
       if (res.responseJSON) {
-        settings = res.responseJSON;
-        announcements = document.createElement('div');
-        announcements.innerHTML = '<div style="opacity: 1; margin: 0px; padding: 0px; left: 0px; height: 40px; width: 100%; z-index: 100000; top: 0px; position: absolute;"><div id="qab_bar" style="text-align: center; margin: 0px; padding: 10px; left: 0px; height: auto; width: 100%; box-sizing: border-box; border: none; position: absolute; background-color: rgba(252, 255, 245, 0.701961); color: rgb(25, 52, 65); font-size: 16px; line-height: 20px; font-family: "Carter One";"><div id="qab_content" style="text-align:center; display: inline-block;"><span id="qab_message">All men\'s t-shirts are 15% off </span> <span style="display:inline-block;"><a id="qab_button" style="outline: none; border: none; padding: 0px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; text-decoration: none; color: rgb(252, 255, 245); background-color: rgb(25, 52, 65); font-size: 16px; line-height: 20px;" type="button" href="javascript:qab_button_on_click()">Check the product</a></span></div></div></div>';
-        document.body.appendChild(announcements);
-        document.body.style.cssText='padding-top: 40px; position: relative;'
+        announcement = res.responseJSON;
+        console.log(announcement);
+
+        fonts_link = document.createElement('link');
+        fonts_link.setAttribute('href', 'https://fonts.googleapis.com/css?family=' + announcement.fonts);
+        fonts_link.setAttribute('rel', 'stylesheet');
+        fonts_link.setAttribute('type', 'text/css');
+
+        container = document.createElement('div');
+        container.style.cssText = 'opacity: 1; margin: 0px; padding: 0px; left: 0px; height: 40px; width: 100%; z-index: 100000; top: 0px; position: absolute;';
+
+        announcement_ele = document.createElement('div');
+        announcement_ele.style.cssText = 'text-align: center; margin: 0px; padding: 10px; left: 0px; height: auto; width: 100%; box-sizing: border-box; border: none; position: absolute; line-height: 20px;';
+        announcement_ele.style.backgroundColor = announcement.background_color;
+        announcement_ele.style.color = announcement.text_color;
+        announcement_ele.style.fontFamily = announcement.fonts;
+        announcement_ele.style.fontSize = announcement.font_size;
+        container.appendChild(announcement_ele);
+
+        content = document.createElement('div');
+        content.style.cssText = 'text-align:center; display: inline-block;';
+        announcement_ele.appendChild(content);
+
+        message = document.createElement('span');
+        message.innerHTML = announcement.message;
+        content.appendChild(message);
+
+        button = document.createElement('span');
+        button.style.cssText = "display:inline-block; cursor: pointer;";
+        content.appendChild(button);
+
+        link = document.createElement('a');
+        link.style.cssText = 'outline: none; border: none; padding: 0px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; text-decoration: none; line-height: 20px;';
+        link.style.backgroundColor = announcement.button_background_color;
+        link.style.color = announcement.button_text_color;
+        link.style.font_size = announcement.font_size;
+        link.setAttribute('type', 'button');
+        link.innerHTML = announcement.button_text;
+        button.appendChild(link);
+
+        document.head.appendChild(fonts_link);
+        document.body.appendChild(container);
+        document.body.style.cssText='padding-top: 40px; position: relative;';
       }
     });
     

@@ -1,8 +1,43 @@
 <% content_for :javascript do %>
   <script type="text/javascript">
     ShopifyApp.ready(function(){
-      ShopifyApp.Bar.initialize({ title: "Home" });
+      ShopifyApp.Bar.initialize({ title: "Announcements" });
     });
   </script>
 <% end %>
-<h1>Hello World</h1>
+<div class="section-content">
+  <div class="section-row">
+    <div class="section-cell">
+      <%= link_to "New announcement", new_announcement_path, class: "btn primary" %>`
+      <table class="table-section">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%  @announcements.each_with_index do |announcement, index| %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= announcement.name %></td>
+              <td>
+                <% if announcement.active %>
+                  <span class="tag green">Active</span> 
+                <% else %>
+                  <span class="tag lightgray">Inactive</span>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to "Edit", edit_announcement_path(announcement), class: "btn default" %>
+                <%= link_to "Delete", announcement_path(announcement), method: :delete, class: "btn destroy", data: { confirm: "Are you sure?"} %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table> 
+    </div>
+  </div>
+</div>
