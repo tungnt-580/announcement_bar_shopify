@@ -55,6 +55,9 @@
         debug: <%= Rails.env.development? ? 'true' : 'false' %>,
         forceRedirect: true
       });
+      ShopifyApp.ready(function(){
+        $('.color-picker').minicolors();
+      });
     </script>
 
     <% if content_for?(:javascript) %>

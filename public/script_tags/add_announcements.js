@@ -9,7 +9,7 @@
   }
 
   function render_announcements() {
-    SS.Ajax.request(server + 'api/announcements/active.json?shop=' + shop, function(res) {
+    SS.Ajax.request(server + 'api/announcements/active.json?shop=' + shop + '&page=' + window.location.href, function(res) {
       if (res.responseJSON) {
         announcement = res.responseJSON;
         console.log(announcement);

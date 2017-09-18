@@ -7,6 +7,19 @@ class Announcement < ApplicationRecord
     Announcement.find_by active: true, shop_id: shop_id
   end
 
+  def display_in_page page 
+    display = 
+    case display_pages_option
+    when 0
+      true
+    when 1
+      URI(page).path == "/"
+    when 2
+    when 3
+
+    end
+  end
+
   private
 
   def check_active

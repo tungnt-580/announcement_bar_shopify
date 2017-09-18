@@ -61,6 +61,7 @@ class AnnouncementsController < ShopifyApp::AuthenticatedController
 
   def announcement_params
     params.require(:announcement).permit :template_id, :shop_id, :name, :message, :button_text, :active, 
-      :background_color, :text_color, :button_background_color, :button_text_color, :fonts, :font_size
+      :background_color, :text_color, :button_background_color, :button_text_color, :fonts, :font_size,
+      :display_pages_option, :display_pages, :exclude_pages_option, :exclude_pages
   end
 end

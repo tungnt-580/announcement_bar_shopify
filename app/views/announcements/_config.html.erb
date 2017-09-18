@@ -1,8 +1,4 @@
 <%= form_for @announcement, html: {"data-shopify-app-submit" => "announcement_submit"} do |f| %>
-  <%= f.hidden_field :background_color %>
-  <%= f.hidden_field :text_color %>
-  <%= f.hidden_field :button_background_color %>
-  <%= f.hidden_field :button_text_color %>
   <%= f.hidden_field :fonts %>
   <%= f.hidden_field :font_size %>
   <%= f.label :name %>
@@ -12,7 +8,48 @@
   <%= f.label :button_text %>
   <%= f.text_field :button_text %>
   <%= f.radio_button :active, true %>
-  <%= f.label :active_true, 'Active' %>
+  <%= f.label :active_true, "Active" %>
   <%= f.radio_button :active, false %>
-  <%= f.label :active_false, 'Inactive' %>
+  <%= f.label :active_false, "Inactive" %>
+  <div class="cell-container">
+    <div class="cell-column">
+      <%= f.label :background_color %>
+      <%= f.text_field :background_color, class: "color-picker" %>
+    </div>
+    <div class="cell-column">
+      <%= f.label :text_color %>
+      <%= f.text_field :text_color, class: "color-picker" %>
+    </div>
+  </div>
+  <div class="cell-container">
+    <div class="cell-column">
+      <%= f.label :button_background_color %>
+      <%= f.text_field :button_background_color, class: "color-picker" %>
+    </div>
+    <div class="cell-column">
+      <%= f.label :button_text_color %>
+      <%= f.text_field :button_text_color, class: "color-picker" %>
+    </div>
+  </div>
+  <%= f.label :display_pages_option, "Display pages" %>
+  <%= f.radio_button :display_pages_option, 0, checked: true %>
+  <%= f.label :display_pages_option_0, "Any pages" %>
+  <%= f.radio_button :display_pages_option, 1 %>
+  <%= f.label :display_pages_option_1, "Home page only" %>  
+  <%= f.radio_button :display_pages_option, 2 %>
+  <%= f.label :display_pages_option_2, "Pages with URLs (use comma to separate if there are multiple URLs)" %>
+  <%= f.radio_button :display_pages_option, 3 %>
+  <%= f.label :display_pages_option_3, "Pages that contains the keyword in their URLs (use comma to separate if there are multiple keywords)" %>
+  <%= f.text_field :display_pages, placeholder: "URLs or keywords" %>
+
+  <%= f.label :exclude_pages_option, "Exclude pages" %>
+  <%= f.radio_button :exclude_pages_option, 0, checked: true %>
+  <%= f.label :exclude_pages_option_0, "Not exclude any pages" %>
+  <%= f.radio_button :exclude_pages_option, 1 %>
+  <%= f.label :exclude_pages_option_1, "Home page only" %>  
+  <%= f.radio_button :exclude_pages_option, 2 %>
+  <%= f.label :exclude_pages_option_2, "Pages with URLs (use comma to separate if there are multiple URLs)" %>
+  <%= f.radio_button :exclude_pages_option, 3 %>
+  <%= f.label :exclude_pages_option_3, "Pages that contains the keyword in their URLs (use comma to separate if there are multiple keywords)" %>
+  <%= f.text_field :exclude_pages, placeholder: "URLs or keywords" %>
 <% end %>
