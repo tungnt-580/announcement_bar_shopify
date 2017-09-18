@@ -9,7 +9,7 @@ ShopifyApp.configure do |config|
   config.scripttags = [
     {
       event: 'onload',
-      src: 'https://1c5aac38.ngrok.io/script_tags/add_announcements.js'
+      src: "#{ENV['HOST_DOMAIN']}/script_tags/add_announcements.js"
     }
   ]
 end

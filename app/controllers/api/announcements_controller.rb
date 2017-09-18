@@ -9,12 +9,12 @@ class Api::AnnouncementsController < ApplicationController
 
   def active
     @announcement = Announcement.get_active @shop.id
-    @announcement = nil if @announcement.display_in_page params[:page]
+    @announcement = nil unless @announcement.display_in_page params[:page]
     response.headers['Access-Control-Allow-Origin'] = "https://#{@shop.shopify_domain}"
     render json: @announcement
   end
 
-  private 
+  private
 
   def load_shop
     @shop = Shop.find_by shopify_domain: params[:shop]
