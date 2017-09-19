@@ -9,6 +9,9 @@
   }
 
   function render_announcements() {
+    SS.Ajax.request('/cart.js', function(res) {
+      console.log(res.responseJSON);
+    });
     SS.Ajax.request(server + 'api/announcements/active.json?shop=' + shop + '&page=' + window.location.href, function(res) {
       if (res.responseJSON) {
         announcement = res.responseJSON;
