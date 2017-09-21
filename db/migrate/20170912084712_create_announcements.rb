@@ -13,11 +13,17 @@ class CreateAnnouncements < ActiveRecord::Migration[5.1]
       t.string :button_background_color
       t.string :button_text_color
       t.string :fonts
-      t.string :font_size
+      t.integer :font_size
       t.integer :display_pages_option
       t.string :display_pages
       t.integer :exclude_pages_option
       t.string :exclude_pages
+
+      t.integer :goal
+      t.string :initial_message
+      t.string :progress_message
+      t.string :achieved_message
+      t.string :currency_color
       t.timestamps
     end
     add_foreign_key :announcements, :announcements, column: :template_id

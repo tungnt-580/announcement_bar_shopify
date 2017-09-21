@@ -9,9 +9,6 @@
   }
 
   function render_announcements() {
-    SS.Ajax.request('/cart.js', function(res) {
-      console.log(res.responseJSON);
-    });
     SS.Ajax.request(server + 'api/announcements/active.json?shop=' + shop + '&page=' + window.location.href, function(res) {
       if (res.responseJSON) {
         announcement = res.responseJSON;
@@ -37,22 +34,47 @@
         content.style.cssText = 'text-align:center; display: inline-block;';
         announcement_ele.appendChild(content);
 
-        message = document.createElement('span');
-        message.innerHTML = announcement.message;
-        content.appendChild(message);
+        if (announcement.goal == 0) {
+          message = document.createElement('span');
+          message.innerHTML = announcement.message;
+          content.appendChild(message);
 
-        button = document.createElement('span');
-        button.style.cssText = "display:inline-block; cursor: pointer;";
-        content.appendChild(button);
+          button = document.createElement('span');
+          button.style.cssText = "display:inline-block; cursor: pointer;";
+          content.appendChild(button);
 
-        link = document.createElement('a');
-        link.style.cssText = 'outline: none; border: none; padding: 0px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; text-decoration: none; line-height: 20px;';
-        link.style.backgroundColor = announcement.button_background_color;
-        link.style.color = announcement.button_text_color;
-        link.style.font_size = announcement.font_size;
-        link.setAttribute('type', 'button');
-        link.innerHTML = announcement.button_text;
-        button.appendChild(link);
+          link = document.createElement('a');
+          link.style.cssText = 'outline: none; border: none; padding: 0px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; text-decoration: none; line-height: 20px;';
+          link.style.backgroundColor = announcement.button_background_color;
+          link.style.color = announcement.button_text_color;
+          link.style.font_size = announcement.font_size;
+          link.setAttribute('type', 'button');
+          link.innerHTML = announcement.button_text;
+          button.appendChild(link);
+        }
+        else {
+          SS.Ajax.request('/cart.js', function(res) {
+            if (res.responseJSON) {
+              cart = res.responseJSON;
+              total_price = cart.total_price / 100;
+              goal = '<span style="color:' + announcement.currency_color + ';">' + (announcement.goal - total_price) + '</span>';
+              console.log(res.responseJSON);
+              console.log(goal + " " + total_price);
+              if (total_price === 0) {
+                message_content = announcement.initial_message.replace('%s', goal);
+              }
+              else if (total_price < announcement.goal) {
+                message_content = announcement.progress_message.replace('%s', goal);
+              }
+              else {
+                message_content = announcement.achieved_message;
+              }
+            }
+            message = document.createElement('span');
+            message.innerHTML = message_content;
+            content.appendChild(message);
+          });
+        }
 
         document.head.appendChild(fonts_link);
         document.body.appendChild(container);

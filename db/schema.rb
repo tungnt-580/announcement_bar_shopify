@@ -28,11 +28,16 @@ ActiveRecord::Schema.define(version: 20170912084712) do
     t.string "button_background_color"
     t.string "button_text_color"
     t.string "fonts"
-    t.string "font_size"
+    t.integer "font_size"
     t.integer "display_pages_option"
     t.string "display_pages"
     t.integer "exclude_pages_option"
     t.string "exclude_pages"
+    t.integer "goal"
+    t.string "initial_message"
+    t.string "progress_message"
+    t.string "achieved_message"
+    t.string "currency_color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_announcements_on_shop_id"

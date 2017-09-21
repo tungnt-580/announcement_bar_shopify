@@ -52,4 +52,31 @@
   <%= f.radio_button :exclude_pages_option, 3 %>
   <%= f.label :exclude_pages_option_3, "Pages that contains the keyword in their URLs (use comma to separate if there are multiple keywords)" %>
   <%= f.text_field :exclude_pages, placeholder: "URLs or keywords" %>
+
+  <%= f.label :goal %>
+  <%= f.text_field :goal, value: "100" %>
+  <%= f.label :initial_message %>
+  <div class="cell-container">
+    <div class="cell-column">
+      <%= text_field_tag "initial_message_parts[]", "Free shipping for order over " %>
+    </div>
+    <%= hidden_field_tag "initial_message_parts[]", "%s" %>
+    <div class="cell-column">
+      <%= text_field_tag "initial_message_parts[]", ". Go to get it!" %>
+    </div>
+  </div>
+  <%= f.label :progress_message %>
+  <div class="cell-container">
+    <div class="cell-column">
+      <%= text_field_tag "progress_message_parts[]", "Only " %>
+    </div>
+    <%= hidden_field_tag "progress_message_parts[]", "%s" %>
+    <div class="cell-column">
+      <%= text_field_tag "progress_message_parts[]", " more to get free shipping. Keep going!" %>
+    </div>
+  </div>
+  <%= f.label :achieved_message %>
+  <%= f.text_field :achieved_message, value: "Congratulation! You've got free shipping." %>
+  <%= f.label :currency_color %>
+  <%= f.text_field :currency_color, class: "color-picker" %>
 <% end %>

@@ -21,6 +21,7 @@ class AnnouncementsController < ShopifyApp::AuthenticatedController
     @announcement = Announcement.new announcement_params
     @announcement.is_template = false
     @announcement.shop_id = @shop.id
+    build_free_shipping_messages
     if @announcement.save
       flash[:success] = "Announcement has been created"
       redirect_to announcements_url
@@ -32,6 +33,7 @@ class AnnouncementsController < ShopifyApp::AuthenticatedController
 
   def update
     @announcement.update announcement_params
+    build_free_shipping_messages
     redirect_to root_url
   end
 
@@ -59,9 +61,16 @@ class AnnouncementsController < ShopifyApp::AuthenticatedController
     @announcement.active = !Announcement.get_active(@shop.id)
   end
 
+  def build_free_shipping_messages
+    return unless @announcement.goal
+    @announcement.initial_message = params[:initial_message_parts].join
+    @announcement.progress_message = params[:progress_message_parts].join
+  end
+
   def announcement_params
     params.require(:announcement).permit :template_id, :shop_id, :name, :message, :button_text, :active, 
       :background_color, :text_color, :button_background_color, :button_text_color, :fonts, :font_size,
-      :display_pages_option, :display_pages, :exclude_pages_option, :exclude_pages
+      :display_pages_option, :display_pages, :exclude_pages_option, :exclude_pages, 
+      :goal, :initial_message, :progress_message, :achieved_message, :currency_color
   end
 end
